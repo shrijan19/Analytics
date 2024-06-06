@@ -1,0 +1,51 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-docker-compose
+{
+	"name": "Development Container",
+	// Update the 'dockerComposeFile' list if you have more compose files or use different names.
+	// The .devcontainer/docker-compose.yml file contains any overrides you need/want to make.
+	"dockerComposeFile": [
+		"../docker-compose-bookings.yml",
+		"docker-compose.yml"
+	],
+	// The 'service' property is the name of the service for the container that VS Code should
+	// use. Update this value and .devcontainer/docker-compose.yml to the real service name.
+	"service": "dev_tpo_app",
+	// The optional 'workspaceFolder' property is the path VS Code should open by default when
+	// connected. This is typically a file mount in .devcontainer/docker-compose.yml
+	"workspaceFolder": "/app/",
+	"extensions": [
+		"ms-python.python",
+		"ms-python.vscode-pylance",
+		"ms-python.pyright",
+		"ms-python.vscode-pylint",
+		"ms-python.black-formatter",
+		"ms-python.isort",
+		"ms-python.sort",
+		"flake8.flake8",
+		"dbaeumer.vscode-eslint",
+		"aaron-bond.better-comments",
+		"esbenp.prettier-vscode",
+		"joaompinto.vscode-graphviz",
+		"tushortz.python-extended-snippets",
+		"davidanson.vscode-markdownlint",
+		"VisualStudioExptTeam.vscodeintellicode",
+		"ms-azuretools.vscode-docker",
+		"formulahendry.docker-explorer",
+		"eamodio.gitlens",
+		"ms-python.pylint",
+		"sonarsource.sonarlint-vscode",
+		"rangav.vscode-thunder-client",
+		"mohamed-nouri.websocket-client",
+		"bradlc.vscode-tailwindcss",
+		"ms-python.flake8"
+	],
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	// "features": {},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [
+		8001,
+		4001
+	],
+	"postCreateCommand": "echo 'Setup complete!'"
+}

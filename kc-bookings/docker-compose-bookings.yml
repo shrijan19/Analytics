@@ -1,0 +1,27 @@
+version: '3.8'
+networks:
+  dev_tpo_app_network:
+
+
+services:
+  dev_tpo_app:
+    build:
+      context: .
+      args:
+        USER_NAME: $USER
+        USER_DISP_NAME: SHRIJAN CHOUDHARY
+        USER_EMAIL: shrijan19@gmail.com
+        USER_ID: 44646
+        GROUP_ID: 1013
+      dockerfile: Dockerfile-Bookings
+    environment:
+      FLASK_ENV: development
+    ports:
+      - "8001:8000"
+      - "4001:4000"
+    volumes:
+      - .:/app
+      - $HOME/.ssh:/home/appuser/.ssh
+      - $HOME/.npmrc:/home/appuser/.npmrc
+    networks:
+      - dev_tpo_app_network
