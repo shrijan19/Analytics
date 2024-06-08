@@ -1,0 +1,4 @@
+﻿username,email,role_name,country,division,platform
+test1,abc@gmail.com,promo_planners,Vietnam,CDP,SHOPEE
+test2,abc1@gmail.com,zonal_managers,Vietnam,CDP,SHOPEE
+test3,abc2@gmail.com,super_admins,Vietnam,CDP,LAZADA
