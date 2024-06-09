@@ -53,3 +53,23 @@ Below are the steps needed to run the project.
 http://127.0.0.1:5000/api/predictbooking/swagger/
 
 You can choose to see the documentation of any API here.
+
+
+# Choice of tools/libraries/frameworks
+
+Version control: GIT has been used for version control as it is the industry wide standard.
+
+Framework: The backend of the project is built is using Flask framework. Flask is used because it is best suitable for lightweight applications with minimum overheads. Since the nature of this project is just to     build apis around the ML model, Flask seems much better choice over Django which comes with a host of add ons.
+
+Documentation: Swagger documentation is used determining the api payloads and responses. It is open source and web based hence is suitable for this project.
+
+Machine Learning: Sklearn has been used as the primary ML library since it has a host of models under its umbrella for both classification as well as regression.
+
+
+# Roadmap
+
+Give more time, I would do the following additonal things in the project.
+1. Authentication of APIs: All APIs would be authenticated using any of the standard authentication mechanisms eg: JWT token authentication.
+2. Frontend: I would on Front end libraries like React and build a UI for the application so that API testing via Thunderclient can be avoided and a neat UI interface can be used for triggering API calls.
+3. Machine learning models: I would implement more classification models given I had more time and would also do a hyperparameter tunings for the models.
+

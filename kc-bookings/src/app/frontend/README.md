@@ -1,0 +1,1 @@
+This project does not have a front end code folder. All APIs must be tested via Thunderclient or Postman. For details refer to README.md file at root of the project directory.

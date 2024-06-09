@@ -6,6 +6,9 @@ import seaborn as sns
 import random
 from sklearn import preprocessing
 import xgboost as xgb
+import pickle
+from os.path import exists
+
 
 class BookingPredictions:
     """Predict bookings of new users"""
@@ -129,34 +132,49 @@ class BookingPredictions:
         y_train = df["country_destination"] if is_train else None
         return x_train, y_train
 
-    def train_xgb(self, x_train, y_train, x_test):
-        """Predicts the destination country using XG Boost algo"""
+    def train_xgb(self, x_train, y_train):
+        """Trains the XG Boost model"""
+        # specify hyperparameters
         params = {"objective": "multi:softmax", "num_class": 12}
         t_train_xgb = xgb.DMatrix(x_train, y_train)
-        x_test_xgb = xgb.DMatrix(x_test)
-
         gbm = xgb.train(params, t_train_xgb, 20)
+
+        # Pickle the ML model
+        pickle.dump(gbm, open('gbm_model.pkl', 'wb'))
+
+    def predict_xgb(self, x_test):
+        """Predicts the destination country using XG Boost algo"""
+        # Loading model to run the predictions
+        gbm = pickle.load(open('gbm_model.pkl', 'rb'))
+        x_test_xgb = xgb.DMatrix(x_test)
         y_pred = gbm.predict(x_test_xgb)
         return y_pred
 
     def main(self, test_df):
         """Main function that calls all sub functions"""
 
-        train_df = self.read_data(self.train_data_file_name)
-
-        train_df = self.preprocess_data(train_df)
-        test_df = self.preprocess_data(test_df)
-        x_train, y_train = self.split_df(train_df)
-        x_test, _ = self.split_df(test_df, is_train=False)
-
+        # create a mapping dictionary for destinations and their 
+        # numerical counterparts
         country_num_dic = {'NDF': 0, 'US': 1, 'other': 2, 'FR': 3, 'IT': 4, 'GB': 5, \
                             'ES': 6, 'CA': 7, 'DE': 8, 'NL': 9, 'AU': 10, 'PT': 11}
         num_country_dic = {y: x for x, y in country_num_dic.items()}
 
-        y_train = pd.Series(y_train).map(country_num_dic)
+        # check if pickle file is present in the directory
+        file_exists = exists("gbm_model.pkl")
 
-        # Run the XGb model
-        y_pred = self.train_xgb(x_train, y_train, x_test)
+        # If not present then run the model and generate its pickle file
+        if not file_exists:
+            train_df = self.read_data(self.train_data_file_name)
+            train_df = self.preprocess_data(train_df)
+            x_train, y_train = self.split_df(train_df)
+            y_train = pd.Series(y_train).map(country_num_dic)
+            # Run the XGb model
+            self.train_xgb(x_train, y_train)
+
+        # Preprocess the test dataframe
+        test_df = self.preprocess_data(test_df)
+        x_test, _ = self.split_df(test_df, is_train=False)
+        y_pred = self.predict_xgb(x_test)
         # convert type to integer
         y_pred = y_pred.astype(int)
 
