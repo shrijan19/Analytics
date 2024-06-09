@@ -1,0 +1,1 @@
+from .predict_booking_blueprint import predictbooking_bp
