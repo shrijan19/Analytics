@@ -68,11 +68,13 @@ class UploadTestController(Resource):
                 # get the predictions
                 obj_pred_bookings = BookingPredictions()
                 df = obj_pred_bookings.main(df)
-                # Convert DataFrame to JSON for demonstration purposes
-                df = df.head(100)
-                data = df.to_dict(orient='records')
-                # print(data)
-                # return jsonify({'data': data}), 200
-                return responseHandler.success_response(200, None, data)
+                # Store the results in the outputs folder
+                df.to_csv("data_files/outputs/output.csv")
+                return responseHandler.success_response(
+                    200, None, {'data': "Model outputs successfully generated."})
             except Exception as e:
-                return jsonify({'error': str(e)}), 500
+                return responseHandler.error_response(
+                "Booking not found", 401, str(e), 401)
+        else:
+            return responseHandler.error_response(
+                "File not found", 401, str(e), 401)

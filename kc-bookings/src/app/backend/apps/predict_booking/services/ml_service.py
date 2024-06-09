@@ -11,8 +11,7 @@ class BookingPredictions:
     """Predict bookings of new users"""
 
     def __init__(self):
-        self.train_data_file_name = "train_users.csv"
-        self.test_data_file_name = "test_users.csv"
+        self.train_data_file_name = "data_files/train_users.csv"
 
     def read_data(self, file_name: str) -> pd.DataFrame:
         """Reads csv and converts them to pandas dataframes"""
@@ -57,9 +56,6 @@ class BookingPredictions:
         # replacing None values with median
         df['dfb_year'].fillna(df['dfb_year'].median(), inplace=True)
         df['dfb_month'].fillna(df['dfb_month'].median(), inplace=True)
-
-        print(df['dfb_year'].isnull().sum())
-        print(df['dfb_month'].isnull().sum())
 
         # getting the mid year flag from month
         df[['dfb_year', 'dfb_month']] = df[['dfb_year', 'dfb_month']].astype(int)
@@ -147,7 +143,6 @@ class BookingPredictions:
         """Main function that calls all sub functions"""
 
         train_df = self.read_data(self.train_data_file_name)
-        # test_df = self.read_data(self.test_data_file_name)
 
         train_df = self.preprocess_data(train_df)
         test_df = self.preprocess_data(test_df)
@@ -172,7 +167,6 @@ class BookingPredictions:
             "id": test_df["id"],
             "country_destination": y_pred
         })
-        print(country_df.head())
         return country_df
 
 # obj = BookingPredictions()
